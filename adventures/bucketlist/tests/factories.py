@@ -8,7 +8,7 @@ class UserFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = User
 
-    username = factory.Sequence(lambda n: "trial user %d" % n)
+    username = factory.Sequence(lambda n: "trialuser%d" % n)
     email = factory.LazyAttribute(
         lambda a: '{0}@gmail.com'.format(
             a.username.replace(' ', '')).lower())

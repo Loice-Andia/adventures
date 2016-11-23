@@ -19,7 +19,7 @@ class Bucketlist(TimeStampMixin):
     This class contains the database schema of the Bucketlists
     i.e. Table and Columns"""
 
-    name = models.CharField(max_length=100, null=False, unique=True)
+    name = models.CharField(max_length=100, null=False)
     description = models.TextField(max_length=1000)
     creator = models.ForeignKey(
         User,
@@ -33,6 +33,7 @@ class Bucketlist(TimeStampMixin):
 
     class Meta:
         ordering = ['name']
+        unique_together = ('name', 'creator',)
 
 
 class Item(TimeStampMixin):
@@ -40,7 +41,7 @@ class Item(TimeStampMixin):
     This class contains the database schema of the Items
     i.e. Table and Columns"""
 
-    name = models.CharField(max_length=100, null=False, unique=True)
+    name = models.CharField(max_length=100, null=False)
     description = models.TextField(max_length=1000)
     completed = models.BooleanField(default=False)
     bucketlist = models.ForeignKey(
@@ -49,6 +50,10 @@ class Item(TimeStampMixin):
         related_name='bucketlist_name')
 
     def __str__(self):
-        return "{} item added to {} bucketlist".format(
+        return "{} item ; {} bucketlist".format(
             self.name,
             self.bucketlist.name)
+
+    class Meta:
+        ordering = ['name']
+        unique_together = ('name', 'bucketlist',)
