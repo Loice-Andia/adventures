@@ -2,7 +2,9 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
 
-from bucketlist.tests.factories import BucketlistFactory, UserFactory, ItemFactory
+from bucketlist.tests.factories import (BucketlistFactory,
+                                        UserFactory,
+                                        ItemFactory)
 
 # Create your tests here.
 
