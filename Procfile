@@ -1,1 +1,1 @@
-web: gunicorn gettingstarted.wsgi --log-file -
++web: python adventures/manage.py migrate; gunicorn --pythonpath adventures adventures.wsgi
