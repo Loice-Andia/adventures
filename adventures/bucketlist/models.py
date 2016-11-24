@@ -14,13 +14,23 @@ class TimeStampMixin(models.Model):
         abstract = True
 
 
-class Bucketlist(TimeStampMixin):
+class BasicDetailsMixin(models.Model):
+    """
+    This mixin defines the date_created and
+    date_modified attributes for each model.
+    """
+    name = models.CharField(max_length=100, null=False)
+    description = models.TextField(max_length=1000)
+
+    class Meta:
+        abstract = True
+
+
+class Bucketlist(BasicDetailsMixin, TimeStampMixin):
     """
     This class contains the database schema of the Bucketlists
     i.e. Table and Columns"""
 
-    name = models.CharField(max_length=100, null=False)
-    description = models.TextField(max_length=1000)
     creator = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -36,13 +46,11 @@ class Bucketlist(TimeStampMixin):
         unique_together = ('name', 'creator',)
 
 
-class Item(TimeStampMixin):
+class Item(BasicDetailsMixin, TimeStampMixin):
     """
     This class contains the database schema of the Items
     i.e. Table and Columns"""
 
-    name = models.CharField(max_length=100, null=False)
-    description = models.TextField(max_length=1000)
     completed = models.BooleanField(default=False)
     bucketlist = models.ForeignKey(
         Bucketlist,
