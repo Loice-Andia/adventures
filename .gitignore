@@ -34,5 +34,7 @@ local_settings.py
 .env
 
 # migrations
+
 bucketlist/migrations/*
+
 
