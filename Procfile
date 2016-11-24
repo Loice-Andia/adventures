@@ -1,1 +1,1 @@
-web: python adventures/manage.py migrate; gunicorn --pythonpath adventures adventures.wsgi
+web: gunicorn --pythonpath adventures adventures.wsgi
