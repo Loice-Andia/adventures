@@ -6,6 +6,8 @@ from bucketlist.models import Bucketlist, Item
 
 class ItemSerializer(serializers.ModelSerializer):
     """Bucketlist Item Serializer"""
+    bucketlist = serializers.ReadOnlyField(source='bucketlist.name')
+
     def validate_name(self, name):
         """Ensure no duplicate name"""
         bucketlist_id = self.context['view'].kwargs['pk']
