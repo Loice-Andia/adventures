@@ -11,20 +11,14 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import datetime
+import dj_database_url
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
-
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '#$m_xv1c(zz26lori-)gl8mep9j(07vwsp3=@&^__d#5)vezx!'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+SECRET_KEY = os.getenv('SECRET_KEY', 'teuahnucfhnyrhyugs')
 
 ALLOWED_HOSTS = ['*']
 
@@ -55,6 +49,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'adventures.urls'
+LOGIN_URL = '/api/v1/login/'
 
 TEMPLATES = [
     {
@@ -91,6 +86,11 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+
+DATABASES = {
+    'default': dj_database_url.config()
+}
 
 
 REST_FRAMEWORK = {

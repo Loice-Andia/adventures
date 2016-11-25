@@ -2,6 +2,7 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
 
+from bucketlist.models import Bucketlist, Item
 from bucketlist.tests.factories import (BucketlistFactory,
                                         UserFactory,
                                         ItemFactory)
@@ -116,6 +117,7 @@ class BucketlistAPITestSuite(APITestCase):
         self.data = {'name': self.bucketlist2.name,
                      'description': self.bucketlist2.description}
         self.client.post(reverse('bucketlists'), self.data, format='json')
+        self.bucketlist = Bucketlist.objects.get(name=self.bucketlist2.name)
 
     def test_user_can_create_bucketlist(self):
         url = reverse('bucketlists')
@@ -138,17 +140,18 @@ class BucketlistAPITestSuite(APITestCase):
         response = self.client.get(reverse('bucketlists'))
         data = response.data
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(1, data['results'][0]['id'])
+        self.assertEqual(self.bucketlist2.name, data['results'][0]['name'])
 
     def test_can_list_one_bucketlist(self):
-        response = self.client.get(reverse('one_bucketlist', kwargs={'pk': 1}))
+        response = self.client.get(reverse('one_bucketlist',
+                                           kwargs={'pk': self.bucketlist.id}))
         data = response.data
         self.assertEqual(response.status_code, 200)
         self.assertEqual(self.bucketlist2.name, data['name'])
 
     def test_can_edit_one_bucketlist(self):
         response = self.client.put(
-            reverse('one_bucketlist', kwargs={'pk': 1}),
+            reverse('one_bucketlist', kwargs={'pk': self.bucketlist.id}),
             {'name': 'holiday',
              'description': self.bucketlist2.description},
             format='json')
@@ -187,23 +190,25 @@ class ItemAPITestSuite(APITestCase):
         # add one bucketlist
         data = {'name': bucketlist.name,
                 'description': bucketlist.description}
-        self.bucketlist = self.client.post(
+        self.client.post(
             reverse('bucketlists'), data, format='json')
+
+        self.bucketlist = Bucketlist.objects.get(name=bucketlist.name)
 
         self.data = {'name': self.item1.name,
                      'description': self.item1.description,
-                     'completed': self.item1.completed,
-                     'bucketlist': self.bucketlist.data["id"]}
-        self.client.post(reverse('items', kwargs={'pk': 1}),
+                     'completed': self.item1.completed}
+        self.client.post(reverse('items', kwargs={'bucketlist_id': self.bucketlist.id}),
                          self.data,
                          format='json')
+        
+        self.item = Item.objects.get(name=self.item1.name, bucketlist=self.bucketlist)
 
     def test_user_can_create_item(self):
-        url = reverse('items', kwargs={'pk': 1})
+        url = reverse('items', kwargs={'bucketlist_id': self.bucketlist.id})
         data = {'name': self.item2.name,
                 'description': self.item2.description,
-                'completed': self.item2.completed,
-                'bucketlist': self.bucketlist.data["id"]}
+                'completed': self.item2.completed}
         response = self.client.post(url, data, format='json')
         data = response.data
         self.assertTrue(self.login)
@@ -211,39 +216,42 @@ class ItemAPITestSuite(APITestCase):
         self.assertEqual(data['name'], self.item2.name)
 
     def test_user_cant_create_item_with_same_name_in_one_bucketlist(self):
-        url = reverse('items', kwargs={'pk': 1})
+        url = reverse('items', kwargs={'bucketlist_id': self.bucketlist.id})
         response = self.client.post(url, self.data, format='json')
         data = response.data
         self.assertEqual(data['name'], ["item already exists in bucketlist"])
 
     def test_can_list_bucketlist_items(self):
-        url = reverse('items', kwargs={'pk': 1})
+        url = reverse('items', kwargs={'bucketlist_id': self.bucketlist.id})
         response = self.client.get(url)
         data = response.data
         self.assertEqual(response.status_code, 200)
         self.assertEqual(self.item1.name, data['results'][0]['name'])
 
     def test_can_list_one_bucketlist_item(self):
-        url = reverse('one_item', kwargs={'bucketlist_id': 1, 'pk': 1})
+        url = reverse('one_item', kwargs={'bucketlist_id': self.bucketlist.id,
+            'pk': self.item.id})
         response = self.client.get(url)
         data = response.data
+        self.assertTrue(self.login)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(self.item1.name, data['name'])
 
     def test_can_edit_one_bucketlist_item(self):
-        url = reverse('one_item', kwargs={'bucketlist_id': 1, 'pk': 1})
+        url = reverse('one_item', kwargs={'bucketlist_id': self.bucketlist.id,
+            'pk': self.item.id})
         response = self.client.put(url,
                                    {'name': 'israel trip',
                                     'description': self.item1.description,
-                                    'completed': self.item1.completed,
-                                    'bucketlist': self.bucketlist.data["id"]},
+                                    'completed': self.item1.completed},
                                    format='json')
         data = response.data
         self.assertEqual(response.status_code, 200)
         self.assertEqual('israel trip', data['name'])
 
-    def test_can_delete_one_bucketlist(self):
-        url = reverse('one_item', kwargs={'bucketlist_id': 1, 'pk': 1})
+    def test_can_delete_one_bucketlist_item(self):
+        url = reverse('one_item', kwargs={'bucketlist_id': self.bucketlist.id,
+            'pk': self.item.id})
         response = self.client.delete(url)
         self.assertEqual(response.status_code, 204)
         response = self.client.get(url)

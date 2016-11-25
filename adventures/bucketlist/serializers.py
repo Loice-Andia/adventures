@@ -10,7 +10,7 @@ class ItemSerializer(serializers.ModelSerializer):
 
     def validate_name(self, name):
         """Ensure no duplicate name"""
-        bucketlist_id = self.context['view'].kwargs['pk']
+        bucketlist_id = self.context['view'].kwargs['bucketlist_id']
         if self.context['request'].method == "POST" or self.context['request'].method == "PUT":
             if Item.objects.filter(name=name, bucketlist=bucketlist_id):
                 raise serializers.ValidationError('item already exists in bucketlist')
