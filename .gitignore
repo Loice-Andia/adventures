@@ -6,6 +6,3 @@ __pycache__/
 # Unit test / coverage reports
 .coverage
 .coverage.*
-
-#migrations
-**/migrations
