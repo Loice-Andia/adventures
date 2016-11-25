@@ -112,6 +112,7 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
 }
 
+
 JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=900),
 }

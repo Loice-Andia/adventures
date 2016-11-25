@@ -1,13 +1,12 @@
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
-from rest_framework import generics
 from rest_framework import viewsets
 from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
 
 from bucketlist.models import Bucketlist, Item
 from bucketlist.serializers import (BucketlistSerializer,
-    ItemSerializer,
-    UserSerializer)
+                                    ItemSerializer,
+                                    UserSerializer)
 from bucketlist.permissions import IsOwnerOrReadOnly
 
 
