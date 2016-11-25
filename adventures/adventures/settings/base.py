@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 import datetime
 import dj_database_url
 import os
-import sys
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -88,19 +87,21 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-if 'test' in sys.argv:
+if 'TRAVIS' in os.environ:
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': 'testdatabase',
+            'ENGINE':   'django.db.backends.postgresql_psycopg2',
+            'NAME':     'travisci',
+            'USER':     'postgres',
+            'PASSWORD': '',
+            'HOST':     'localhost',
+            'PORT':     '',
         }
     }
-
 else:
     DATABASES = {
         'default': dj_database_url.config()
     }
-
 
 REST_FRAMEWORK = {
     'TEST_REQUEST_RENDERER_CLASSES': (
