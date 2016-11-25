@@ -5,7 +5,10 @@ python:
 install:
   pip install -r requirements.txt
 script:
-  cd adventures && coverage run --omit=*env/* manage.py test
+  - cd adventures
+  - python manage.py makemigrations bucketlist
+  - python manage.py migrate bucketlist
+  - coverage run --omit=*env/* manage.py test
 after_success:
   coveralls
 notifications:
