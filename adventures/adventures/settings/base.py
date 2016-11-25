@@ -102,6 +102,11 @@ else:
     }
 
 
+DATABASES = {
+    'default': dj_database_url.config()
+}
+
+
 REST_FRAMEWORK = {
     'TEST_REQUEST_RENDERER_CLASSES': (
         'rest_framework.renderers.MultiPartRenderer',
