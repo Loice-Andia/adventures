@@ -32,7 +32,7 @@ class ItemlistViewSet(viewsets.ModelViewSet):
     serializer_class = ItemSerializer
 
     def get_bucketlist(self):
-        return get_object_or_404(Bucketlist, pk=self.kwargs['pk'])
+        return get_object_or_404(Bucketlist, pk=self.kwargs['bucketlist_id'])
 
     def get_queryset(self):
         return Item.objects.filter(bucketlist=self.get_bucketlist())
