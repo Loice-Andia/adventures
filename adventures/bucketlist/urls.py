@@ -1,6 +1,5 @@
-from django.conf.urls import include, url
+from django.conf.urls import url
 from rest_framework_jwt.views import obtain_jwt_token
-from rest_framework_nested import routers
 from rest_framework.urlpatterns import format_suffix_patterns
 from rest_framework_swagger.views import get_swagger_view
 
@@ -11,8 +10,9 @@ schema_view = get_swagger_view(title='Adventures API')
 
 
 urlpatterns = [
-    url(r'^login/', obtain_jwt_token, name='login'),
-    url(r'^register/', UserRegister.as_view({'post': 'create'}), name='register'),
+    url(r'^login/$', obtain_jwt_token, name='login'),
+    url(r'^register/$',
+        UserRegister.as_view({'post': 'create'}), name='register'),
     url(r'^bucketlists/$',
         BucketlistViewSet.as_view({'get': 'list', 'post': 'create'}),
         name='bucketlists'),

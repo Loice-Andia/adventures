@@ -49,7 +49,6 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'adventures.urls'
-LOGIN_URL = '/api/v1/login/'
 
 TEMPLATES = [
     {
@@ -90,12 +89,12 @@ AUTH_PASSWORD_VALIDATORS = [
 if 'TRAVIS' in os.environ:
     DATABASES = {
         'default': {
-            'ENGINE':   'django.db.backends.postgresql_psycopg2',
-            'NAME':     'travisci',
-            'USER':     'postgres',
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'travisci',
+            'USER': 'postgres',
             'PASSWORD': '',
-            'HOST':     'localhost',
-            'PORT':     '',
+            'HOST': 'localhost',
+            'PORT': '',
         }
     }
 else:
@@ -117,15 +116,26 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
     ),
-    'PAGE_SIZE': 2,
-
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
 }
-
 
 JWT_AUTH = {
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=900),
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(minutes=30)
 }
+
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'api_key': {
+            'type': 'apiKey',
+            'in': 'header',
+            'name': 'Authorization'
+        }
+    },
+    "api_path": "/api/v1/",
+    "is_authenticated": True,
+}
+
+LOGIN_URL = 'rest_framework:login'
+LOGOUT_URL = 'rest_framework:logout'
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
