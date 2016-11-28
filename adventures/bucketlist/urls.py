@@ -1,12 +1,9 @@
 from django.conf.urls import url
 from rest_framework_jwt.views import obtain_jwt_token
 from rest_framework.urlpatterns import format_suffix_patterns
-from rest_framework_swagger.views import get_swagger_view
 
 from bucketlist.api import (BucketlistViewSet, ItemlistViewSet,
-                            UserRegister)
-
-schema_view = get_swagger_view(title='Adventures API')
+                            schema_view, UserRegister)
 
 
 urlpatterns = [

@@ -2,12 +2,15 @@ from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
 from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
+from rest_framework_swagger.views import get_swagger_view
 
 from bucketlist.models import Bucketlist, Item
 from bucketlist.serializers import (BucketlistSerializer,
                                     ItemSerializer,
                                     UserSerializer)
 from bucketlist.permissions import IsOwnerOrReadOnly
+
+schema_view = get_swagger_view(title='Adventures API')
 
 
 class UserRegister(viewsets.ModelViewSet):

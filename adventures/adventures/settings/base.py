@@ -22,6 +22,8 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'teuahnucfhnyrhyugs')
 
 ALLOWED_HOSTS = ['*']
 
+DEBUG = True
+
 
 # Application definition
 
@@ -86,21 +88,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-if 'TRAVIS' in os.environ:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'travisci',
-            'USER': 'postgres',
-            'PASSWORD': '',
-            'HOST': 'localhost',
-            'PORT': '',
-        }
-    }
-else:
-    DATABASES = {
-        'default': dj_database_url.config()
-    }
+
 
 REST_FRAMEWORK = {
     'TEST_REQUEST_RENDERER_CLASSES': (
@@ -134,8 +122,7 @@ SWAGGER_SETTINGS = {
     "is_authenticated": True,
 }
 
-LOGIN_URL = 'rest_framework:login'
-LOGOUT_URL = 'rest_framework:logout'
+LOGIN_URL = '/api/v1/login/'
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
