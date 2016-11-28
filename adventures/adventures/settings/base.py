@@ -88,8 +88,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-
 REST_FRAMEWORK = {
     'TEST_REQUEST_RENDERER_CLASSES': (
         'rest_framework.renderers.MultiPartRenderer',
@@ -121,6 +119,7 @@ SWAGGER_SETTINGS = {
     "api_path": "/api/v1/",
     "is_authenticated": True,
 }
+
 
 LOGIN_URL = '/api/v1/login/'
 
