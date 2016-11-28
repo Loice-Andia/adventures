@@ -121,7 +121,8 @@ SWAGGER_SETTINGS = {
 }
 
 
-LOGIN_URL = '/api/v1/login/'
+LOGIN_URL = 'rest_framework:login'
+LOGOUT_URL = 'rest_framework:logout'
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
