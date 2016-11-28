@@ -88,8 +88,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-
 REST_FRAMEWORK = {
     'TEST_REQUEST_RENDERER_CLASSES': (
         'rest_framework.renderers.MultiPartRenderer',
@@ -122,7 +120,12 @@ SWAGGER_SETTINGS = {
     "is_authenticated": True,
 }
 
+<<<<<<< HEAD
 LOGIN_URL = '/api/v1/login/'
+=======
+LOGIN_URL = '/api/v1/login'
+LOGOUT_URL = 'rest_framework:logout'
+>>>>>>> 0152c8fa613f0d4af33e28e92a5a948514bd3dce
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
