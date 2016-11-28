@@ -140,7 +140,7 @@ class BucketlistAPITestSuite(APITestCase):
         response = self.client.get(reverse('bucketlists'))
         data = response.data
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(self.bucketlist2.name, data['results'][0]['name'])
+        self.assertEqual(self.bucketlist2.name, data[0]['name'])
 
     def test_can_list_one_bucketlist(self):
         response = self.client.get(reverse('one_bucketlist',
@@ -201,8 +201,9 @@ class ItemAPITestSuite(APITestCase):
         self.client.post(reverse('items', kwargs={'bucketlist_id': self.bucketlist.id}),
                          self.data,
                          format='json')
-        
-        self.item = Item.objects.get(name=self.item1.name, bucketlist=self.bucketlist)
+
+        self.item = Item.objects.get(
+            name=self.item1.name, bucketlist=self.bucketlist)
 
     def test_user_can_create_item(self):
         url = reverse('items', kwargs={'bucketlist_id': self.bucketlist.id})
@@ -226,11 +227,11 @@ class ItemAPITestSuite(APITestCase):
         response = self.client.get(url)
         data = response.data
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(self.item1.name, data['results'][0]['name'])
+        self.assertEqual(self.item1.name, data[0]['name'])
 
     def test_can_list_one_bucketlist_item(self):
         url = reverse('one_item', kwargs={'bucketlist_id': self.bucketlist.id,
-            'pk': self.item.id})
+                                          'pk': self.item.id})
         response = self.client.get(url)
         data = response.data
         self.assertTrue(self.login)
@@ -239,7 +240,7 @@ class ItemAPITestSuite(APITestCase):
 
     def test_can_edit_one_bucketlist_item(self):
         url = reverse('one_item', kwargs={'bucketlist_id': self.bucketlist.id,
-            'pk': self.item.id})
+                                          'pk': self.item.id})
         response = self.client.put(url,
                                    {'name': 'israel trip',
                                     'description': self.item1.description,
@@ -251,7 +252,7 @@ class ItemAPITestSuite(APITestCase):
 
     def test_can_delete_one_bucketlist_item(self):
         url = reverse('one_item', kwargs={'bucketlist_id': self.bucketlist.id,
-            'pk': self.item.id})
+                                          'pk': self.item.id})
         response = self.client.delete(url)
         self.assertEqual(response.status_code, 204)
         response = self.client.get(url)

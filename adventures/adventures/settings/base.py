@@ -101,6 +101,7 @@ else:
     DATABASES = {
         'default': dj_database_url.config()
     }
+    DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql_psycopg2'
 
 REST_FRAMEWORK = {
     'TEST_REQUEST_RENDERER_CLASSES': (
@@ -134,7 +135,7 @@ SWAGGER_SETTINGS = {
     "is_authenticated": True,
 }
 
-LOGIN_URL = 'rest_framework:login'
+LOGIN_URL = '/api/v1/login'
 LOGOUT_URL = 'rest_framework:logout'
 
 # Internationalization
