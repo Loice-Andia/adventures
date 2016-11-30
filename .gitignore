@@ -6,3 +6,19 @@ __pycache__/
 # Unit test / coverage reports
 .coverage
 .coverage.*
+
+# adventures miscellaneous
+adventures/bin
+adventures/lib
+adventures/include
+
+# Static files
+staticfiles
+**lib/
+
+#coverage info for js tests
+/jsCoverage
+
+# node modules
+**node_modules/
+npm-debug.log

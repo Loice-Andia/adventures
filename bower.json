@@ -1,0 +1,34 @@
+{
+  "name": "adventures",
+  "description": "Bucketlist application",
+  "main": "app.js",
+  "authors": [
+    "Loice Andia"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "adventures",
+    "django",
+    "django",
+    "rest",
+    "angular"
+  ],
+  "homepage": "https://github.com/andela-landia/adventures",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "moment": "~2.10.6",
+    "mdi": "~1.2.65",
+    "jquery": "~2.1.4",
+    "js-cookie": "~2.1.2",
+    "bootstrap": "~3.3.5",
+    "ace-builds": "~1.2.0",
+    "prettify-min": "~1.0.4"
+  }
+}
