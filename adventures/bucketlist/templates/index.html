@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load bootstrap %}
+
+{% block navbar %}{% endblock navbar %}
+
+{% block body %}
+<!--page content-->
+<section id="react"></section>
+{% endblock body %}
+{% block script %}
+    <!-- React bundled js -->
+    <script type= 'text/javascript' src="{% static 'js/build/bundle.js' %}"></script>
+{% endblock script %}

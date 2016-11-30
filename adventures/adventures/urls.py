@@ -2,6 +2,7 @@ from django.conf.urls import include, url
 from django.contrib import admin
 
 from bucketlist import urls as api_urls
+from bucketlist import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
