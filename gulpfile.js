@@ -7,7 +7,7 @@ var source = require('vinyl-source-stream');
 
 gulp.task('buildreact', function() {
   return browserify({
-      entries: 'static/js/components/app.jsx',
+      entries: 'app-ui/components/app.jsx',
       extensions: ['.jsx'],
       debug: true
     })
@@ -16,18 +16,18 @@ gulp.task('buildreact', function() {
     })
     .bundle()
     .pipe(source('bundle.js'))
-    .pipe(gulp.dest('static/js/build'));
+    .pipe(gulp.dest('adventures/static/js/build'));
 });
 
 gulp.task('sass', function() {
-  return gulp.src('static/scss/*.scss')
+  return gulp.src('app-ui/scss/*.scss')
     .pipe(sass())
-    .pipe(gulp.dest('static/css'));
+    .pipe(gulp.dest('adventures/static/css'));
 });
 
 gulp.task('watch', function() {
-  gulp.watch('static/scss/*.scss', ['sass']);
-  gulp.watch('static/js/components/*.jsx', ['buildreact']);
+  gulp.watch('app-ui/scss/*.scss', ['sass']);
+  gulp.watch('app-ui/components/*.jsx', ['buildreact']);
 });
 
 gulp.task('default', function(callback) {

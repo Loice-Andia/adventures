@@ -1,8 +1,9 @@
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
-from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_swagger.views import get_swagger_view
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 from bucketlist.models import Bucketlist, Item
 from bucketlist.serializers import (BucketlistSerializer,
@@ -21,17 +22,21 @@ class UserRegister(viewsets.ModelViewSet):
 
 
 class BucketlistViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticatedOrReadOnly,
+    authentication_classes = [JSONWebTokenAuthentication]
+    permission_classes = [IsAuthenticated,
                           IsOwnerOrReadOnly]
-    queryset = Bucketlist.objects.all()
     serializer_class = BucketlistSerializer
+
+    def get_queryset(self):
+        return Bucketlist.objects.filter(creator=self.request.user).all()
 
     def perform_create(self, serializer):
         serializer.save(creator=self.request.user)
 
 
 class ItemlistViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    authentication_classes = [JSONWebTokenAuthentication]
+    permission_classes = [IsAuthenticated]
     serializer_class = ItemSerializer
 
     def get_bucketlist(self):

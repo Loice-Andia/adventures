@@ -9,6 +9,7 @@ import {
 } from 'react-bootstrap';
 import request from 'superagent';
 import Cookies from 'js-cookie';
+import cookie from 'react-cookie'
 
 class LoginForm extends Component {
   constructor() {
@@ -38,12 +39,14 @@ class LoginForm extends Component {
 
   loginUser(username, password) {
     request
-      .post('http://adventures-bucketlist.herokuapp.com/api-auth/login/')
+      .post('/api/v1/login/')
       .type('form')
       .set('X-CSRFToken', Cookies.get('csrftoken'))
       .send({ username, password })
-      .end((err, result) => {
-        console.log(err);
+      .end((err, response) => {
+        sessionStorage.accessToken = response.body.token;
+        console.log(sessionStorage.accessToken)
+        window.location.href = '/bucketlists';
       });
   }
   render() {

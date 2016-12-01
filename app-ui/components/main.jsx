@@ -9,7 +9,7 @@ export default class Main extends Component {
 
   render() {
     return (
-      <div style={{"background-image": "url("../images/intro.jpg")"}} >
+      <div >
         <Menu/> {this.props.children}
         <div className="intro-text">
       Have any ideas of what you 

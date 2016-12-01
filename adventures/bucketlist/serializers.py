@@ -13,7 +13,8 @@ class ItemSerializer(serializers.ModelSerializer):
         bucketlist_id = self.context['view'].kwargs['bucketlist_id']
         if self.context['request'].method == "POST" or self.context['request'].method == "PUT":
             if Item.objects.filter(name=name, bucketlist=bucketlist_id):
-                raise serializers.ValidationError('item already exists in bucketlist')
+                raise serializers.ValidationError(
+                    'item already exists in bucketlist')
         return name
 
     class Meta:
@@ -38,7 +39,13 @@ class BucketlistSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Bucketlist
-        fields = '__all__'
+        fields = ('id',
+                  'name',
+                  'description',
+                  'date_created',
+                  'date_modified',
+                  'creator',
+                  'items')
 
         read_only_fields = ('date_created',)
 

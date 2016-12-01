@@ -25,7 +25,6 @@ class RegisterForm extends Component {
   }
 
   handleSubmit(event) {
-    console.log(this.state.username)
     event.preventDefault();
     this.registerUser(this.state.username, this.state.email,
                       this.state.password);
@@ -41,8 +40,9 @@ class RegisterForm extends Component {
 
   registerUser(username, email, password) {
     request
-      .post('http://adventures-bucketlist.herokuapp.com/api/v1/register/')
+      .post('/api/v1/register/')
       .send({'username': username, 'password': password, 'email': email})
+      .set('X-CSRFToken', Cookies.get('csrftoken'))
       .end((err, result) => {
         if(err || !result.ok){
           let errorMessage = 'Error occured';

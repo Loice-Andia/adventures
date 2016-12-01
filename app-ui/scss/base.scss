@@ -1,6 +1,7 @@
 /* body styling */
 body {
   background-size: cover;
+  background-image: url("../images/intro.jpg");
   height: 100%;
   font-family: "Lato", Arial, sans-serif;
   padding-bottom: 20px;
@@ -12,6 +13,15 @@ hr {
 
 .top-margin {
   margin-top: 100px;
+}
+.bucketlists{
+  background-color: white;
+  background-size: cover;
+  margin-top: 10%;
+  margin-left: 10%;
+  margin-right: 10%;
+  width:80%;
+  border-radius: 25px;
 }
 /* intro text styling */
 .intro-text{
@@ -274,6 +284,7 @@ hr {
     height: 100px;
   }
 }
+
 
 .navbar {
   margin-bottom: 0;

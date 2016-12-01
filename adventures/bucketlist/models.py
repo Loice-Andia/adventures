@@ -55,7 +55,7 @@ class Item(BasicDetailsMixin, TimeStampMixin):
     bucketlist = models.ForeignKey(
         Bucketlist,
         on_delete=models.CASCADE,
-        related_name='bucketlist_name')
+        related_name='items')
 
     def __str__(self):
         return "{} item ; {} bucketlist".format(
