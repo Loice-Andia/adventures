@@ -9,17 +9,27 @@ body {
 hr {
   margin-top: 5px; }
 
+.items {
+  color: orange;
+  padding: 10px;
+  background: white;
+  border-radius: 5px;
+  margin: auto;
+  width: 90%;
+  box-shadow: 0 5px 5px -6px #DC8100;
+  margin-bottom: 10px; }
+
 .top-margin {
   margin-top: 100px; }
 
 .bucketlists {
-  background-color: white;
+  background-color: #eaf0f2;
   background-size: cover;
   margin-top: 10%;
   margin-left: 10%;
   margin-right: 10%;
   width: 80%;
-  border-radius: 25px; }
+  border-radius: 10px; }
 
 /* intro text styling */
 .intro-text {
@@ -39,7 +49,7 @@ hr {
   background-color: transparent;
   position: absolute;
   top: 0;
-  left: 15px;
+  width: 100%;
   z-index: 1000;
   border: none; }
   .static-nav.navbar-default .navbar-nav > li.active a {
@@ -190,11 +200,18 @@ hr {
   z-index: 2000;
   background: #fff; }
 
-@media (max-width: 768px) {
+/*@media (max-width: 768px) {
   .navbar-form {
-    display: none; }
+    display: none;
+  }
+
   .submenu {
-    height: 100px; } }
+    height: 100px;
+  }
+}*/
+@media (min-width: 1200px) {
+  .container {
+    width: 80%; } }
 
 .navbar {
   margin-bottom: 0;
