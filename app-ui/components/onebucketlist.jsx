@@ -6,7 +6,6 @@ import {
   Navbar,
   MenuItem
 } from 'react-bootstrap';
-import CreateBucketlistModal from './createbucketlist.jsx';
 import BucketlistMenu from './bucketlistmenu.jsx';
 
 class OneBucketlist extends Component {
@@ -18,12 +17,10 @@ class OneBucketlist extends Component {
 
 componentWillMount() {
     const { params } = this.props;
-    console.log("am here");
     request
       .get(`/api/v1/bucketlists/${params.bucketlist_id}/`)
       .set('Authorization', 'JWT '+ sessionStorage.accessToken)
       .end((err, result) => {
-        console.log("result.body");
         if(err || !result.ok){
           let errorMessage = 'Error occured';
           this.setState({
@@ -32,12 +29,10 @@ componentWillMount() {
           });
         } else {
           if(result.body.name){
-            console.log(typeof(result.body.items));
             this.setState({bucketlist:result.body});
             this.setState({items:result.body.items});
           }
           else{
-            console.log("am here");
             let errorMessage = 'No bucketlists';
             this.setState({
             message: errorMessage,
@@ -60,40 +55,41 @@ handleFieldChange(event) {
   render() {
     return (
       <div >
-      <BucketlistMenu bucketlist_id={this.state.bucketlist.id}/>
+      <BucketlistMenu bucketlist_id={this.state.bucketlist.id} name={this.state.bucketlist.name} description={this.state.bucketlist.description}/>
         <div className="bucketlists" >
         <br />
   
-              <center><h2> {this.state.bucketlist.name}</h2></center>
-                <p className="or-divider"><span>-</span></p>
-                Description :
+              <center><h2 style={{'text-transform': 'uppercase'}}> {this.state.bucketlist.name}</h2></center>
+              <div className="items">
+                <h5  style={{'color': '#647688'}}>Description:</h5>
                 <div>{this.state.bucketlist.description}</div>
                 <br />
-                <div> Date created :
-                {this.state.bucketlist.date_created}</div>
-                <div> Date modified :
-                {this.state.bucketlist.date_modified}</div>
+                <h5  style={{'color': '#647688'}}>Date created :</h5>
+                {this.state.bucketlist.date_created}
+                <h5  style={{'color': '#647688'}}>Date modified :</h5>
+                {this.state.bucketlist.date_modified}
                 <div>
-                <h2> Items </h2>
-                <table>
-                  <thead>
-                    <th> Name </th>
-                    <th> Description </th>
-                    <th> Completion </th>
+                <h2 style={{'color': '#647688'}}> Items </h2>
+                <table style={{'border': '1px solid #647688'}}>
+                  <thead style={{"background-color": '#eaf0f2', "color": 'grey'}}>
+                    <th style={{'border': '1px solid #647688', 'padding': '8px'}}> Name </th>
+                    <th style={{'border': '1px solid #647688', 'padding': '8px'}}> Description </th>
+                    <th style={{'border': '1px solid #647688', 'padding': '8px'}}> Completion </th>
                   </thead>
                 <tbody>
                 {this.state.items.map((value, index)=>{
                   return (
                     <tr key={index}>
-                      <td>{value.name}</td>
-                      <td> {value.description}</td>
-                      <td> {value.completed ? "DONE" : "PENDING" }</td>
+                      <td style={{'border': '1px solid #647688', 'padding': '8px'}}><Link to={`/onebucketlist/${this.state.bucketlist.id}/items/${value.id}`}>{value.name}</Link></td>
+                      <td style={{'border': '1px solid #647688', 'padding': '8px'}}> {value.description}</td>
+                      <td style={{'border': '1px solid #647688', 'padding': '8px'}}> {value.completed ? "DONE" : "PENDING" }</td>
                     </tr>)
                 })}
                 </tbody>
                 </table>
                 </div>
         <br />
+        </div>
       </div>
       </div>
     )

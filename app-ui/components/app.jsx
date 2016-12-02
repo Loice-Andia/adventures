@@ -3,8 +3,11 @@ import {render} from 'react-dom';
 import {browserHistory, IndexRoute, Router, Route} from 'react-router';
 import React from 'react';
 import Main from './main.jsx';
-import Bucketlists from './bucketlists.jsx'
-import OneBucketlist from './onebucketlist.jsx'
+import Bucketlists from './bucketlists.jsx';
+import OneBucketlist from './onebucketlist.jsx';
+import OneItem from './oneitem.jsx';
+import Logout from './logout.jsx';
+
 
 function hashLinkScroll() {
   const {hash} = window.location;
@@ -29,7 +32,9 @@ const routes = (
   <Router history={browserHistory} onUpdate={hashLinkScroll}>
     <Route path="/" component={Main}/>
    	<Route path="bucketlists" component={Bucketlists}/>
-    <Route path="onebucketlist/:bucketlist_id" component={OneBucketlist}/> 
+    <Route path="onebucketlist/:bucketlist_id" component={OneBucketlist}/>
+    <Route path="/onebucketlist/:bucketlist_id/items/:item_id" component={OneItem}/>
+    <Route path="/logout" component={Logout} />
   </Router>
 );
 

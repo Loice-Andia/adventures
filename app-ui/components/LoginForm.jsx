@@ -9,7 +9,6 @@ import {
 } from 'react-bootstrap';
 import request from 'superagent';
 import Cookies from 'js-cookie';
-import cookie from 'react-cookie'
 
 class LoginForm extends Component {
   constructor() {

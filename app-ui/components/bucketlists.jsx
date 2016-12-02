@@ -58,14 +58,17 @@ handleFieldChange(event) {
       <SubMenu />
         <div className="bucketlists" >
         <br />
-        <center><h2> Bucketlists</h2></center>
+        <center><h1> BUCKETLISTS</h1></center>
+        <br />
         {this.state.bucketlists.map((value, index) =>{
           return (
             
-              <div key={value.id}>
-              <h4><Link to={`/onebucketlist/${value.id}`}>{value.name}</Link></h4>
-                <p className="or-divider"><span>{value.date_created}</span></p>
-                <div>{value.description}</div>
+              <div key={value.id} className="items">
+              <h4><Link to={`/onebucketlist/${value.id}`} style={{'text-transform': 'uppercase'}}>{value.name}</Link></h4>
+              <hr />
+                <p className="or-divider"><span>Date Created : {value.date_created}</span></p>
+                <h5  style={{'color': '#647688'}}>Description:</h5>
+                <div style={{'padding-left': '70px'}}> {value.description}</div>
                 
               </div>
               

@@ -25,7 +25,7 @@ export default class SubMenu extends Component {
               <CreateBucketlistModal>Create Bucketlist</CreateBucketlistModal>
             </li>
             <li>
-              <Link to="#">LogOut</Link>
+              <Link to="/logout">LogOut</Link>
             </li>
           </Nav>
         </Navbar.Collapse>

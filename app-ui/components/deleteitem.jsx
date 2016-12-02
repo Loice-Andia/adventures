@@ -11,10 +11,10 @@ import {
   NavItem,
   Tab
 } from 'react-bootstrap';
-import CreateBucketlistForm from './createbucketlistForm.jsx';
+import DeleteItemForm from './deleteitemform.jsx';
 
 
-class CreateBucketlistModal extends Component {
+class DeleteItemModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -32,14 +32,13 @@ class CreateBucketlistModal extends Component {
   render() {
     return (
       <div>
-        <Button onClick={this.open} role="create_bucketlist" className={this.props.type}>
+        <Button onClick={this.open} role="delete_item" className={this.props.type}>
           {this.props.children}
         </Button>
         <Modal show={this.state.showModal} onHide={this.close} className="signin-modal">
           <Modal.Body>
-            <h4 >New Bucketlist</h4>
-            <Tab.Container id="create_bucketlist" defaultActiveKey={this.props.active}>
-              <CreateBucketlistForm />
+            <Tab.Container id="delete_item" defaultActiveKey={this.props.active}>
+              <DeleteItemForm bucketlist_id={this.props.bucketlist_id} item_id={this.props.item_id}/>
             </Tab.Container>
           </Modal.Body>
         </Modal>
@@ -48,4 +47,4 @@ class CreateBucketlistModal extends Component {
   }
 }
 
-export default CreateBucketlistModal;
+export default DeleteItemModal;
