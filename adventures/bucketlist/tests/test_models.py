@@ -2,7 +2,9 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.test import TestCase
 
 from bucketlist.models import Bucketlist, Item
-from bucketlist.tests.factories import BucketlistFactory, ItemFactory, UserFactory
+from bucketlist.tests.factories import (BucketlistFactory,
+                                        ItemFactory,
+                                        UserFactory)
 
 
 class BucketlistModelTestSuite(TestCase):

@@ -109,23 +109,30 @@ class BucketlistAPITestSuite(APITestCase):
                 'password': self.user.password}
         self.client.post(url, data, format='json')
         # login user
-        self.login = self.client.login(
-            username=self.user.username,
-            password=self.user.password)
-
+        response = self.client.post(reverse('login'),
+                                    {'username': self.user.username,
+                                     'password': self.user.password},
+                                    format='json'
+                                    )
+        self.token = response.data['token']
+        self.client.credentials(HTTP_AUTHORIZATION='JWT ' + self.token)
         # add one bucketlist
         self.data = {'name': self.bucketlist2.name,
                      'description': self.bucketlist2.description}
-        self.client.post(reverse('bucketlists'), self.data, format='json')
+        response = self.client.post(
+            reverse('bucketlists'),
+            self.data,
+            format='json')
         self.bucketlist = Bucketlist.objects.get(name=self.bucketlist2.name)
 
     def test_user_can_create_bucketlist(self):
         url = reverse('bucketlists')
         data = {'name': self.bucketlist1.name,
                 'description': self.bucketlist1.description}
-        response = self.client.post(url, data, format='json')
+        response = self.client.post(url,
+                                    data,
+                                    format='json')
         data = response.data
-        self.assertTrue(self.login)
         self.assertIsNotNone(data['id'])
         self.assertEqual(data['name'], self.bucketlist1.name)
 
@@ -143,8 +150,8 @@ class BucketlistAPITestSuite(APITestCase):
         self.assertEqual(self.bucketlist2.name, data[0]['name'])
 
     def test_can_list_one_bucketlist(self):
-        response = self.client.get(reverse('one_bucketlist',
-                                           kwargs={'pk': self.bucketlist.id}))
+        response = self.client.get(
+            reverse('one_bucketlist', kwargs={'pk': self.bucketlist.id}))
         data = response.data
         self.assertEqual(response.status_code, 200)
         self.assertEqual(self.bucketlist2.name, data['name'])
@@ -163,7 +170,9 @@ class BucketlistAPITestSuite(APITestCase):
         response = self.client.delete(
             reverse('one_bucketlist', kwargs={'pk': 1}))
         self.assertEqual(response.status_code, 204)
-        response = self.client.get(reverse('one_bucketlist', kwargs={'pk': 1}))
+        response = self.client.get(
+            reverse('one_bucketlist', kwargs={'pk': 1}),
+            headers={'Authorization': 'JWT ' + self.token})
         data = response.data
         self.assertEqual(response.status_code, 404)
         self.assertEqual("Not found.", data["detail"])
@@ -183,9 +192,13 @@ class ItemAPITestSuite(APITestCase):
                 'password': self.user.password}
         self.client.post(url, data, format='json')
         # login user
-        self.login = self.client.login(
-            username=self.user.username,
-            password=self.user.password)
+        response = self.client.post(reverse('login'),
+                                    {'username': self.user.username,
+                                     'password': self.user.password},
+                                    format='json'
+                                    )
+        self.token = response.data['token']
+        self.client.credentials(HTTP_AUTHORIZATION='JWT ' + self.token)
 
         # add one bucketlist
         data = {'name': bucketlist.name,
@@ -212,7 +225,6 @@ class ItemAPITestSuite(APITestCase):
                 'completed': self.item2.completed}
         response = self.client.post(url, data, format='json')
         data = response.data
-        self.assertTrue(self.login)
         self.assertIsNotNone(data['id'])
         self.assertEqual(data['name'], self.item2.name)
 
@@ -234,7 +246,6 @@ class ItemAPITestSuite(APITestCase):
                                           'pk': self.item.id})
         response = self.client.get(url)
         data = response.data
-        self.assertTrue(self.login)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(self.item1.name, data['name'])
 
